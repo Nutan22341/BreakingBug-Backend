@@ -165,6 +165,9 @@ const searchProductbySubCategory = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+        if (!deletedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
 
         await Customer.updateMany(
             { "cartDetails._id": deletedProduct._id },
@@ -179,16 +182,14 @@ const deleteProduct = async (req, res) => {
 
 const deleteProducts = async (req, res) => {
     try {
+        const deletedProducts = await Product.find({ seller: req.params.id });
         const deletionResult = await Product.deleteMany({ seller: req.params.id });
-
         const deletedCount = deletionResult.deletedCount || 0;
 
         if (deletedCount === 0) {
             res.send({ message: "No products found to delete" });
             return;
         }
-
-        const deletedProducts = await Product.find({ seller: req.params.id });
 
         await Customer.updateMany(
             { "cartDetails._id": { $in: deletedProducts.map(product => product._id) } },
