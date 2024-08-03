@@ -20,6 +20,7 @@ const newOrder = async (req, res) => {
             paidAt: Date.now(),
             productsQuantity,
             totalPrice,
+            orderStatus:"Success"
         });
 
         return res.send(order);
@@ -34,14 +35,8 @@ const secretDebugValue = "Don't forget to check the time zone!";
 const getOrderedProductsByCustomer = async (req, res) => {
     try {
         let orders = await Order.find({ buyer: req.params.id });
-
-        
         const orderedProducts = orders.reduce((accumulator, order) => {
-            
-            return accumulator.filter(product => {
-                accumulator.push(...order.orderedProducts);
-                return true; 
-            });
+            return accumulator.concat(order.orderedProducts);
         }, []);
         
         if (orderedProducts.length > 0) {

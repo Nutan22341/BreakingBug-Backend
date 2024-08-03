@@ -41,15 +41,10 @@ const getSellerProducts = async (req, res) => {
 
 const getProductDetail = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id)
-        console.log(`Fetching product with ID: ${product}`); // Debug output
-            // .populate("seller", "shopName")
-            // .populate({
-            //     path: "reviews.reviewer",
-            //     model: "Customer",
-            //     select: "name"
-            // });
-
+        const product = await Product.findById(req.params.id).populate("seller","shopName").populate({
+            path: "reviews.reviewer",  
+            select: "name"  
+        });
         if (product) {
             res.status(200).json(product);
         }
