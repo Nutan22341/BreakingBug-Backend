@@ -1,3 +1,8 @@
+Here's the google sheet link for bugs:
+https://docs.google.com/spreadsheets/d/19VnU_1_Ov6nWxMBTOwNIi6Fu293nddvnzyOah7B8K8g/edit?usp=sharing
+
+
+
 # Breaking Bug - Backend Repository
 
 <img src="https://images.prismic.io/ieeemuj/Zqu58B5LeNNTxuyE_BreakingBugBanner.png?auto=format,compress" alt="Breaking Bug Poster">
